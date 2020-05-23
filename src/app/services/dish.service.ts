@@ -29,4 +29,3 @@ export class DishService {
     return this.getDishes().pipe(map(dishes => dishes.map(dish => dish.id)));
   }
 }
-
