@@ -13,11 +13,7 @@
                     <h3>{{dish.name | uppercase}}</h3>
                 </mat-card-title>
             </mat-card-header>
-<<<<<<< HEAD
-            <img mat-card-image src="{{ BaseURL + dish.image }}" alt={{dish.name}}>
-=======
-            <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
->>>>>>> 7d9cd3fd11f2b33298661c11c2afbdeb3832effb
+            <img mat-card-image src="{{ baseURL + dish.image }}" alt={{dish.name}}>
             <mat-card-content>
                 <p>{{dish.description}}</p>
             </mat-card-content>
@@ -53,7 +49,7 @@
             <mat-list-item *ngIf="this.commentForm.valid">
                 <p matLine>{{commentForm.value.comment}}</p>
                 <p matLine>{{commentForm.value.rating}} Stars</p>
-                <p matLine>--{{commentForm.value.author}} {{commentForm.value.date}}</p>
+                <p matLine>--{{commentForm.value.author}} {{ commentForm.value.date | date }}</p>
             </mat-list-item>
         </mat-list>
 
@@ -79,9 +75,13 @@
         </div>
     </div>
 
-    <div [hidden]="dish">
+    <div [hidden]="dish || errMess">
         <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
-      </div>
+    </div>
+    <div fxFlex *ngIf="errMess">
+        <h2>Error</h2>
+        <h4>{{errMess}}</h4>
+    </div>
 
 </div>
 

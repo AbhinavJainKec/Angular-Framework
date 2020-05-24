@@ -38,6 +38,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LeaderService } from './services/leader.service';
 import { LoginComponent } from './login/login.component';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { LoginComponent } from './login/login.component';
     DishService,
     PromotionService,
     LeaderService,
+    ProcessHTTPMsgService,
     {provide: 'BaseURL', useValue: baseURL}
   ],
   entryComponents: [
