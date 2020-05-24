@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { flyInOut, expand } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -12,7 +13,8 @@ import { flyInOut } from '../animations/app.animation';
     'style': 'display: block;'
   },
   animations: [
-    flyInOut()
+    flyInOut(),
+    expand()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -21,6 +23,11 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  feedbackcopy: Feedback;
+  errMess: string;
+  loading: boolean;
+  response: boolean;
+
 
   formErrors = {
     'firstname': '',
@@ -50,8 +57,13 @@ export class ContactComponent implements OnInit {
     },
   };
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
+  constructor(
+    private fb: FormBuilder,
+    private feedbackService: FeedbackService
+    ){
+      this.createForm();
+      this.loading = false;
+      this.response = false;
   }
 
   ngOnInit(): void {
@@ -95,18 +107,34 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe(feedback => {
+          this.feedback = feedback;
+          console.log(this.feedback);
+        } ,
+        errmess => {
+          this.feedback = null;
+          this.feedbackcopy = null;
+          this.errMess = <any>errmess;
+        } ,
+        () => {
+          this.response = true;
+          setTimeout(() => {
+              this.response = false;
+              this.loading = false;
+          }, 5000);
+        }
+      );
     this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: '',
-      email: '',
-      agree: false,
-      contacttype: 'None',
+      firstname: '' ,
+      lastname: '' ,
+      telnum: '' ,
+      email: '' ,
+      agree: false ,
+      contacttype: 'None' ,
       message: ''
     });
-    this.feedbackFormDirective.resetForm();
   }
-
 }

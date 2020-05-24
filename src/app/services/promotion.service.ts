@@ -31,4 +31,8 @@ export class PromotionService {
       .pipe(map(promotions => promotions[0]))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
+
+  getPromotionIds(): Observable<string[] | any> {
+    return this.getPromotions().pipe(map(promotions => promotions.map(promotion => promotion.id)));
+  }
 }

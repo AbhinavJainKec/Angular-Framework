@@ -6,7 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 import { from } from 'rxjs';
-import { digest } from '@angular/compiler/src/i18n/digest';
 
 @Injectable({
   providedIn: 'root'
