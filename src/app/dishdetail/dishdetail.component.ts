@@ -62,7 +62,7 @@ export class DishdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
-    @Inject('BaseURL') private baseURL
+    @Inject('BaseURL') public baseURL
   ) { }
 
   ngOnInit(): void {
